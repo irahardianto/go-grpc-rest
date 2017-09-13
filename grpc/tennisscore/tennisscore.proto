@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package tennisscore;
+
+service ScoreBoard {
+  rpc GetScore(ScoreRequest) returns (ScoreResult) {}
+}
+
+message ScoreRequest {
+  string player1 = 1;
+  string player2 = 2;
+}
+
+message ScoreResult {
+  string score = 1;
+}
