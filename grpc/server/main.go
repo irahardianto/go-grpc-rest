@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 
@@ -15,12 +14,6 @@ const (
 	port = ":18288"
 )
 
-type server struct{}
-
-func (s *server) GetScore(ctx context.Context, in *pb.ScoreRequest) (*pb.ScoreResult, error) {
-	return &pb.ScoreResult{Score: "Hello this is score of " + in.GetPlayer1() + " & " + in.GetPlayer2()}, nil
-}
-
 func main() {
 
 	conn, err := net.Listen("tcp", port)
@@ -29,7 +22,9 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterScoreBoardServer(s, &server{})
+	ScoreBoardServer := ServiceContainer().InjectScoreBoardServer()
+
+	pb.RegisterScoreBoardServer(s, &ScoreBoardServer)
 
 	reflection.Register(s)
 	if err := s.Serve(conn); err != nil {
