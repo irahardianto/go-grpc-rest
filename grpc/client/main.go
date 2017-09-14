@@ -26,7 +26,7 @@ func main() {
 
 	result, err := client.GetScore(context.Background(), &pb.ScoreRequest{Player1: player1Name, Player2: player2Name})
 	if err != nil {
-		log.Fatalf("could not greet: %v", err)
+		log.Fatalf("could not get score: %v", err)
 	}
-	log.Printf("Greeting: %s", result.GetScore())
+	log.Printf("The current score is: %s", result.GetScore())
 }

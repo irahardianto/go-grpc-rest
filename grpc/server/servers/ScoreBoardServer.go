@@ -11,6 +11,12 @@ type ScoreBoardServer struct {
 	PlayerService interfaces.IPlayerService
 }
 
-func (s *ScoreBoardServer) GetScore(ctx context.Context, in *pb.ScoreRequest) (*pb.ScoreResult, error) {
-	return &pb.ScoreResult{Score: "Hello this is score of " + in.GetPlayer1() + " & " + in.GetPlayer2()}, nil
+func (server *ScoreBoardServer) GetScore(ctx context.Context, in *pb.ScoreRequest) (*pb.ScoreResult, error) {
+
+	scores, err := server.PlayerService.GetScores(in.GetPlayer1(), in.GetPlayer2())
+	if err != nil {
+		//Handle error
+	}
+
+	return &pb.ScoreResult{Score: scores}, nil
 }
